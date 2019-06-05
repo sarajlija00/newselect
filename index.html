@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Select</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="Select">
+        <meta name="author" content="Elvir Uzunovic">
+        <script src="./js/script.js"></script>
+    </head>
+
+    <body onload="getLeagueInTheInput()">
+        <div>
+            <div>
+                <span>League:</span><br>
+                <select id="show" name="league" onchange="getTeamInTheInput()"></select>
+            </div>
+
+            <div>   
+                <span>Teams:</span><br>
+                <select id="teams" name="teams" onchange="showResult()"></select>
+            </div>
+            <div id="elva"></div>
+
+            <div id="tim"></div>
+        </div>
+    </body>
+</html>
