@@ -1,22 +1,31 @@
 const token = `6205c51f2f31438ab76389b3644da184`;
 
-const getLeague = () => new Promise ((resolve, reject) => {
+// fetch(url, {
+//     method: 'POST', // *GET, POST, PUT, DELETE, etc.
+//     headers: {
+//         'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(data), // body data type must match "Content-Type" header
+// })
+// .then(response => response.json()); // parses JSON
+
+
+
+const getLeague = () => {
     let url = `http://api.football-data.org/v2/competitions`;
-    let xhttp = new XMLHttpRequest ();
-    xhttp.onreadystatechange = function () {
-        if (xhttp.readyState == 4 && xhttp.status == 200) {
-            let object = JSON.parse(xhttp.responseText);
-            console.log (object);
-            resolve (object);
-        }
-        if(xhttp.readyState == 4 && xhttp.status !== 200) {
-            reject ('load error')
+    
+    const requestObject = {
+        method: 'GET', 
+        headers: {
+            'X-Auth-Token': token
         }
     }
-    xhttp.open ('GET', url, true);
-    xhttp.setRequestHeader ('X-Auth-Token',token);
-    xhttp.send();
-});
+
+    return fetch(url, requestObject)
+        .then(response => response.json())
+        .catch(err => console.log('nije uspio request', err));
+}
+
 
 const getLeagueInTheInput = () => {
     let options = ``;
@@ -35,24 +44,18 @@ const getLeagueInTheInput = () => {
     .catch (err => console.log ('error', err))
 };
 
-const getTeam = (leagueCode) => new Promise ((resolve, reject) => {
+const getTeam = (leagueCode) => {
     let url = `http://api.football-data.org/v2/competitions/${leagueCode}/teams`;
-    let xhttp = new XMLHttpRequest ();
-    xhttp.onreadystatechange = function () {
-        if (xhttp.readyState == 4 && xhttp.status == 200) {
-            let object = JSON.parse(xhttp.responseText);
-            console.log(object);
-            resolve (object);
+    return fetch(url, {
+        method: 'GET', 
+        headers: {
+            'X-Auth-Token': token
         }
-        if(xhttp.readyState == 4 && xhttp.status !== 200) {
-            reject ('error')
-        }
-        
-    }
-    xhttp.open ('GET', url, true);
-    xhttp.setRequestHeader ('X-Auth-Token',token);
-    xhttp.send();
-});
+    })
+    .then(response => response.json())
+    .catch(err => console.log('nije uspio getteams request', err));
+
+};
 
 const getTeamInTheInput = () => {
     const show = document.getElementById('show');
@@ -74,24 +77,23 @@ const getTeamInTheInput = () => {
 }
 
 
-const showResult = (team) => new Promise ((resolve, reject) => {
+const showResult = (team) => {
    
     let url = `http://api.football-data.org/v2/teams/${team}`;
-    let xhttp = new XMLHttpRequest ();
-    xhttp.onreadystatechange = function () {
-        if (xhttp.readyState == 4 && xhttp.status == 200) {
-            let object = JSON.parse(xhttp.responseText);
-            console.log(object);
-            resolve (object);
+    const metadata = {
+        method: 'GET',
+        headers: {
+            'x-auth-token': token
         }
+<<<<<<< HEAD
         if(xhttp.readyState == 4 && xhttp.status !== 200) {
             reject ('greska u requestu', err);
         }        
+=======
+>>>>>>> 3e94e73bacc8eaf9b81d66a8a12059a5d771c274
     }
-    xhttp.open ('GET', url, true);
-    xhttp.setRequestHeader ('X-Auth-Token',token);
-    xhttp.send();
-});
+    return fetch(url, metadata).then(response => response.json());
+};
 
 const showTeam = () => {
     let footballClub = document.getElementById('teams');
@@ -101,3 +103,24 @@ const showTeam = () => {
 
 }
 
+
+const loginRequest = (email, password) => {
+    const body = JSON.stringify({
+        email,
+        password
+    });
+    return fetch('https://3d1pftib26.execute-api.eu-west-1.amazonaws.com/dev/user/login', {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body
+    })
+    .then(response => response.json()); // parses JSON
+}
+
+const login = () => {
+    loginRequest('elviruzunovic@gmail.com', 'hangover') 
+      .then(token => console.log(token))
+      .catch(err => console.error(err));
+}
