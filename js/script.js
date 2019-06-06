@@ -96,7 +96,24 @@ const showResult = (team) => new Promise ((resolve, reject) => {
 const showTeam = () => {
     let footballClub = document.getElementById('teams');
     let team = footballClub.options[footballClub.selectedIndex].value;
+    let html =``;
     showResult(team)
-    .then()
-
+    .then(data =>{
+        html =`
+        <div>
+            <img src=${data.crestUrl}>
+            <div>Club name: ${data.name}</div>
+            <div>Club colors: ${data.clubColors}</div>
+            <div>Club nickname: ${data.tla}</div>
+            <div>Club address: ${data.address}</div>
+            <div>Club phone: ${data.phone}</div>
+            <div>Club email: ${data.email}</div>
+            <div>Club website: ${data.website}</div>
+        </div>
+        `
+    const tim = document.getElementById('tim');
+    tim.innerHTML = html;
+    })
+        
+    .catch (err => console.log ('greska', err));
 }
