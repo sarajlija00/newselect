@@ -102,12 +102,12 @@ const showTeam = () => {
         html =`
         <div>
             <img src=${data.crestUrl}>
-            <div>Club name: ${data.name}</div>
-            <div>Club colors: ${data.clubColors}</div>
-            <div>Club nickname: ${data.tla}</div>
-            <div>Club address: ${data.address}</div>
-            <div>Club phone: ${data.phone}</div>
-            <div>Club email: ${data.email}</div>
+            <div>Club name: ${data.name}</div><br>
+            <div>Club colors: ${data.clubColors}</div><br>
+            <div>Club short name: ${data.tla}</div><br>
+            <div>Club address: ${data.address}</div><br>
+            <div>Club phone: ${data.phone}</div><br>
+            <div>Club email: ${data.email}</div><br>
             <div>Club website: ${data.website}</div>
         </div>
         `
