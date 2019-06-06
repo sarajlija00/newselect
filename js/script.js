@@ -70,7 +70,7 @@ const getTeamInTheInput = () => {
     const teamSelectInTheInput = document.getElementById('teams');
     teamSelectInTheInput.innerHTML = options;
     })
-        .catch(err => console.log('show error', err))
+    .catch(err => console.log('show error', err))
 }
 
 
@@ -85,7 +85,7 @@ const showResult = (team) => new Promise ((resolve, reject) => {
             resolve (object);
         }
         if(xhttp.readyState == 4 && xhttp.status !== 200) {
-            reject ('error')
+            reject ('greska u requestu', err);
         }        
     }
     xhttp.open ('GET', url, true);
@@ -94,9 +94,8 @@ const showResult = (team) => new Promise ((resolve, reject) => {
 });
 
 const showTeam = () => {
-    let footballClub = document.getElementById('tim');
+    let footballClub = document.getElementById('teams');
     let team = footballClub.options[footballClub.selectedIndex].value;
-    let div = ``;
     showResult(team)
     .then()
 
