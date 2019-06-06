@@ -1,31 +1,22 @@
 const token = `6205c51f2f31438ab76389b3644da184`;
 
-// fetch(url, {
-//     method: 'POST', // *GET, POST, PUT, DELETE, etc.
-//     headers: {
-//         'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify(data), // body data type must match "Content-Type" header
-// })
-// .then(response => response.json()); // parses JSON
-
-
-
-const getLeague = () => {
+const getLeague = () => new Promise ((resolve, reject) => {
     let url = `http://api.football-data.org/v2/competitions`;
-    
-    const requestObject = {
-        method: 'GET', 
-        headers: {
-            'X-Auth-Token': token
+    let xhttp = new XMLHttpRequest ();
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            let object = JSON.parse(xhttp.responseText);
+            console.log (object);
+            resolve (object);
+        }
+        if(xhttp.readyState == 4 && xhttp.status !== 200) {
+            reject ('load error')
         }
     }
-
-    return fetch(url, requestObject)
-        .then(response => response.json())
-        .catch(err => console.log('nije uspio request', err));
-}
-
+    xhttp.open ('GET', url, true);
+    xhttp.setRequestHeader ('X-Auth-Token',token);
+    xhttp.send();
+});
 
 const getLeagueInTheInput = () => {
     let options = ``;
@@ -44,18 +35,24 @@ const getLeagueInTheInput = () => {
     .catch (err => console.log ('error', err))
 };
 
-const getTeam = (leagueCode) => {
+const getTeam = (leagueCode) => new Promise ((resolve, reject) => {
     let url = `http://api.football-data.org/v2/competitions/${leagueCode}/teams`;
-    return fetch(url, {
-        method: 'GET', 
-        headers: {
-            'X-Auth-Token': token
+    let xhttp = new XMLHttpRequest ();
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            let object = JSON.parse(xhttp.responseText);
+            console.log(object);
+            resolve (object);
         }
-    })
-    .then(response => response.json())
-    .catch(err => console.log('nije uspio getteams request', err));
+        if(xhttp.readyState == 4 && xhttp.status !== 200) {
+            reject ('error')
+        }
 
-};
+    }
+    xhttp.open ('GET', url, true);
+    xhttp.setRequestHeader ('X-Auth-Token',token);
+    xhttp.send();
+});
 
 const getTeamInTheInput = () => {
     const show = document.getElementById('show');
@@ -69,31 +66,32 @@ const getTeamInTheInput = () => {
                 <option value="${team.id}">${team.name}</option>
             `;
         });
-        
+
     const teamSelectInTheInput = document.getElementById('teams');
     teamSelectInTheInput.innerHTML = options;
     })
-    .catch(err => console.log('show error', err))
+        .catch(err => console.log('show error', err))
 }
 
 
-const showResult = (team) => {
-   
+const showResult = (team) => new Promise ((resolve, reject) => {
+
     let url = `http://api.football-data.org/v2/teams/${team}`;
-    const metadata = {
-        method: 'GET',
-        headers: {
-            'x-auth-token': token
+    let xhttp = new XMLHttpRequest ();
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            let object = JSON.parse(xhttp.responseText);
+            console.log(object);
+            resolve (object);
         }
-<<<<<<< HEAD
         if(xhttp.readyState == 4 && xhttp.status !== 200) {
-            reject ('greska u requestu', err);
+            reject ('error')
         }        
-=======
->>>>>>> 3e94e73bacc8eaf9b81d66a8a12059a5d771c274
     }
-    return fetch(url, metadata).then(response => response.json());
-};
+    xhttp.open ('GET', url, true);
+    xhttp.setRequestHeader ('X-Auth-Token',token);
+    xhttp.send();
+});
 
 const showTeam = () => {
     let footballClub = document.getElementById('teams');
@@ -101,26 +99,4 @@ const showTeam = () => {
     showResult(team)
     .then()
 
-}
-
-
-const loginRequest = (email, password) => {
-    const body = JSON.stringify({
-        email,
-        password
-    });
-    return fetch('https://3d1pftib26.execute-api.eu-west-1.amazonaws.com/dev/user/login', {
-        method: 'POST', 
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body
-    })
-    .then(response => response.json()); // parses JSON
-}
-
-const login = () => {
-    loginRequest('elviruzunovic@gmail.com', 'hangover') 
-      .then(token => console.log(token))
-      .catch(err => console.error(err));
 }
