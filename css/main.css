@@ -11,3 +11,18 @@ input {
     border-style: solid;
     border-color: black;
 }
+.text {
+    font-weight: bold;
+    font-size: 10px;
+    text-align: center;
+    color: black;
+    background-color: rgb(226, 219, 219);
+    border-radius: 10px;
+    margin-right: 80%;
+    margin-top: 5%;
+    padding: 1%;
+}
+
+.margin-input {
+    margin-left: 2%;
+}
