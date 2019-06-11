@@ -58,7 +58,7 @@ const getTeamInTheInput = () => {
     const show = document.getElementById('show');
     let leagueCode = show.options[show.selectedIndex].value;
 
-    let options = '';
+    let options = '<option>select team</option>';
     getTeam(leagueCode)
     .then(result => {
         result.teams.forEach(team => {
