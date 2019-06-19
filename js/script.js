@@ -20,6 +20,8 @@ const getLeague = () => new Promise ((resolve, reject) => {
 
 const getLeagueInTheInput = () => {
     let options = ``;
+    hideInput()
+    hideTeams()
     getLeague()
     .then (leagues => {
         leagues.competitions.forEach(league => {
@@ -34,6 +36,13 @@ const getLeagueInTheInput = () => {
     })
     .catch (err => console.log ('error', err))
 };
+const hideInput = () => {
+    let hideInput = document.getElementById('input');
+    hideInput.style = 'display: none';
+}
+
+
+
 
 const getTeam = (leagueCode) => new Promise ((resolve, reject) => {
     let url = `http://api.football-data.org/v2/competitions/${leagueCode}/teams`;
@@ -54,11 +63,16 @@ const getTeam = (leagueCode) => new Promise ((resolve, reject) => {
     xhttp.send();
 });
 
+const showInput = () => {
+    let hideInput = document.getElementById('input');
+    hideInput.style = 'display: block';
+}
+
 const getTeamInTheInput = () => {
     const show = document.getElementById('show');
     let leagueCode = show.options[show.selectedIndex].value;
-
     let options = '';
+    showInput()
     getTeam(leagueCode)
     .then(result => {
         result.teams.forEach(team => {
@@ -70,7 +84,7 @@ const getTeamInTheInput = () => {
     const teamSelectInTheInput = document.getElementById('teams');
     teamSelectInTheInput.innerHTML = options;
     })
-        .catch(err => console.log('show error', err))
+    .catch(err => console.log('show error', err))
 }
 
 
@@ -93,10 +107,23 @@ const showResult = (team) => new Promise ((resolve, reject) => {
     xhttp.send();
 });
 
+const hideTeams = () => {
+    let hideResult = document.getElementById('result');
+    hideResult.style = 'display: none';
+}
+
+
+const showTeams = () => {
+    let showResult = document.getElementById('result');
+    showResult.style = 'display: block';
+}
+
+
 const showTeam = () => {
     let footballClub = document.getElementById('teams');
     let team = footballClub.options[footballClub.selectedIndex].value;
     let html =``;
+    showTeams()
     showResult(team)
     .then(data =>{
         html =`
