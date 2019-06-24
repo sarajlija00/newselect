@@ -45,16 +45,18 @@ const hideInput = () => {
 
 
 const getTeam = (leagueCode) => new Promise ((resolve, reject) => {
+    let err = document.getElementById('error');
     let url = `http://api.football-data.org/v2/competitions/${leagueCode}/teams`;
     let xhttp = new XMLHttpRequest ();
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             let object = JSON.parse(xhttp.responseText);
-            console.log(object);
+            err.style = 'display:none';
             resolve (object);
         }
         if(xhttp.readyState == 4 && xhttp.status !== 200) {
-            reject ('error')
+            err.innerHTML = 'only for subscribers, please subscrib';
+            reject (err);
         }
 
     }
@@ -69,11 +71,10 @@ const showInput = () => {
 }
 
 const getTeamInTheInput = () => {
+    const errDiv = document.getElementById('error');
     const show = document.getElementById('show');
     let leagueCode = show.options[show.selectedIndex].value;
     let options = '<option>select team</option>';
-    
-
     showInput()
     getTeam(leagueCode)
     .then(result => {
@@ -86,7 +87,7 @@ const getTeamInTheInput = () => {
     const teamSelectInTheInput = document.getElementById('teams');
     teamSelectInTheInput.innerHTML = options;
     })
-    .catch(err => console.log('show error', err))
+    .catch(err => console.log('only for subscribers, please subscrib', errDiv))
 }
 
 
