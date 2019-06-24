@@ -71,7 +71,6 @@ const showInput = () => {
 }
 
 const getTeamInTheInput = () => {
-    const errDiv = document.getElementById('error');
     const show = document.getElementById('show');
     let leagueCode = show.options[show.selectedIndex].value;
     let options = '<option>select team</option>';
@@ -87,7 +86,7 @@ const getTeamInTheInput = () => {
     const teamSelectInTheInput = document.getElementById('teams');
     teamSelectInTheInput.innerHTML = options;
     })
-    .catch(err => console.log('only for subscribers, please subscrib', errDiv))
+    .catch(err => console.log('only for subscribers, please subscrib', err))
 }
 
 
@@ -126,12 +125,13 @@ const showTeam = () => {
     let footballClub = document.getElementById('teams');
     let team = footballClub.options[footballClub.selectedIndex].value;
     let html =``;
+    let display =``;
     showTeams()
     showResult(team)
-    .then(data =>{
+    .then(data =>{ 
         html =`
         <div>
-            <img src=${data.crestUrl} alt="logo" height="150" width="150">
+            <img src=${data.crestUrl} alt="logo" height="150" width="200">
             <br>
             <br>
             <div>CLUB NAME: ${data.name}</div><br>
@@ -142,9 +142,23 @@ const showTeam = () => {
             <div>CLIB EMAIL: ${data.email}</div><br>
             <div>CLUB WEBSITE: ${data.website}</div>
         </div>
+        <div>${data.squad.position}</div>
         `
+        
+        for (let i = 0; i < data.squad.length; i++) 
+            display += `
+                <div class = "text">
+                    <div class:>NAME:${data.squad[i].name}</div>
+                    <div>POSITION:${data.squad[i].position}</div>
+                    <div>DATE OF BIRTH:${data.squad[i].dateOfBirth}</div>
+                    <div>COUNTRY OF BIRTH:${data.squad[i].countryOfBirth}</div>
+                </div>    
+
+                `;
     const tim = document.getElementById('tim');
     tim.innerHTML = html;
+    const playerSquad = document.getElementById('squad');
+    playerSquad.innerHTML = display;
     })
         
     .catch (err => console.log ('greska', err));
