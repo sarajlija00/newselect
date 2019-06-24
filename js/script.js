@@ -71,14 +71,21 @@ const showInput = () => {
 const getTeamInTheInput = () => {
     const show = document.getElementById('show');
     let leagueCode = show.options[show.selectedIndex].value;
+    let options = '<option>select team</option>';
+    
+
     showInput()
     getTeam(leagueCode)
+    .then(result => {
+        result.teams.forEach(team => {
+            options += `
+                <option value="${team.id}">${team.name}</option>
             `;
         });
 
     const teamSelectInTheInput = document.getElementById('teams');
     teamSelectInTheInput.innerHTML = options;
-    })`
+    })
     .catch(err => console.log('show error', err))
 }
 
